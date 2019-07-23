@@ -22,11 +22,13 @@ export const FETCHING_FAILURE = 'FETCHING_FAILURE'
 
 export const gettingSmurf = () => dispatch => {
   dispatch({type: FETCHING_START})
-  axios
+    return axios
     .get('http://localhost:3333/smurfs',)
     .then (res => {
-      dispatch({type: FETCHING_SUCCESS, payload: res.data})
-    })
+      console.log("DATA FROM GET",res)
+      dispatch({type: FETCHING_SUCCESS, payload: res.data})}
+    )
+    
     .catch(err => {
       dispatch({type: FETCHING_FAILURE, payload: err})
     })
@@ -36,11 +38,11 @@ export const CREATING_SMURF = 'CREATING_SMURF'
 export const CREATING_SMURF_SUCCESS = 'CREATING_SMURF_SUCCESS'
 export const CREATING_SMURF_FAILURE = ' CREATING_SMURF_FAILURE'
 
-export const createSmurf = () => dispatch => {
+export const createSmurf = (newSmurf) => dispatch => {
   dispatch({type: CREATING_SMURF});
  
-  axios
-    .post('http://localhost:3333/smurfs')
+  return axios
+    .post('http://localhost:3333/smurfs', newSmurf)
     .then(res => {
       dispatch({type: CREATING_SMURF_SUCCESS, payload: res.data})
     })

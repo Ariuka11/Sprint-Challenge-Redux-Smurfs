@@ -31,15 +31,16 @@ import {FETCHING_START,
   } from '../actions';
 
   const initialState = {
-   smurfs: [],
+   smurfs: [
+        ],
    fetchingSmurfs: false,
    addingSmurf: false,
-   updatingSmurf: false,
-   deletingSmurf: false,
+  //  updatingSmurf: false,
+  //  deletingSmurf: false,
    error: null
   }
 
-  const rootReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
       switch(action.type){
 
         case FETCHING_START :
@@ -51,7 +52,7 @@ import {FETCHING_START,
           return {
             ...state,
             fetchingSmurfs: false,
-            smurf: [...state.smurfs, action.payload]
+            smurfs:action.payload
           }
         case FETCHING_FAILURE:
           return {
@@ -59,11 +60,24 @@ import {FETCHING_START,
             fetchingSmurfs: false,
             error: action.payload
           }
+        case CREATING_SMURF:
+          return {
+            ...state,
+            addingSmurf: true
+          }
         case CREATING_SMURF_SUCCESS: 
           return{
             ...state,
-            smurf: [...state.smurfs, action.payload]
+            addingSmurf:false,
+            smurfs: action.payload
           }
+        case CREATING_SMURF_FAILURE: 
+          return{
+            ...state,
+            addingSmurf:false,
+            error: action.payload
+          }
+        
 
         default : return state;
       }

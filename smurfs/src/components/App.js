@@ -15,9 +15,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SmurfFrom />
-        <Smurfs />
+        <li> <SmurfFrom /></li>
+        <li> <Smurfs /></li>
       </div>
+     
     );
   }
 }

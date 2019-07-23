@@ -3,19 +3,14 @@ import {connect} from 'react-redux';
 import {createSmurf, } from '../actions'
 
 
-
 class SmurfForm extends React.Component{
 
     state = {
-        newSmurf : {
             name: '',
             age: '',
             height: ''
-        }
     }
 
-  
-    
     handleChange = e => {
         e.preventDefault();
         this.setState({
@@ -23,36 +18,31 @@ class SmurfForm extends React.Component{
         });
     }
 
-    handleUpdate = e => {
-        e.preventDefault();
-     
-        this.props.createSmurf(this.state.newSmurf);
-        this.setState({
-                    newSmurf: {
-                        name: '',
-                        height: '',
-                        age: ''
-                    }
-    })
-
-      
+    addSmurf = e => {
+        e.preventDefault()
+        const { name, age, height } = this.state
+        this.props.createSmurf({ name, age, height })
+        this.setState({name: '', age: '', height: ''})
     }
 
     render(){
         return (
             <div>
-                <form onSubmit = {this.handleUpdate}>
-                    <input 
+                <form onSubmit = {this.addSmurf}>
+                    <input
+                    name = 'name' 
                     onChange = {this.handleChange}
                     type = 'name'
                     placeholder = 'name'
                     value = {this.state.name} />
                     <input 
+                    name = 'age'
                     onChange = {this.handleChange}
                     type = 'number'
                     placeholder = 'age'
                     value = {this.state.age} />
                     <input 
+                    name = 'height'
                     onChange = {this.handleChange}
                     type = 'number'
                     placeholder = 'height'
@@ -60,13 +50,21 @@ class SmurfForm extends React.Component{
                     <button value = 'submit' >Add Smurf</button>
                 </form>
             </div>
+            
         )
     }
 }
 
-const mapStateToProps = state => ({
-    smurfs: state.smurfs
-})
+const mapStateToProps = state => {
+    console.log('post props', state)
+    return {
+        smurfs: state.smurfs,
+        fetchingSmurfs: state.fetchingSmurfs,
+        error: state.error,
+        addingSmurf: state.addingSmurf
+    }
+    
+}
 
 
-export default connect (mapStateToProps, {createSmurf,})(SmurfForm);
+export default connect (mapStateToProps, {createSmurf})(SmurfForm);
